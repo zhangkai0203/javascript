@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+        function func(name){
+            this.name = name
+            this.inc = function(){
+            	alert(this.name)
+            }
+        }
+        //类的方法
+        func.run = function(){
+        	alert("run")
+        }
+        //类的原型方法
+        func.prototype.sun = function(){
+        	alert("sun")
+        }
+        func.run()
+        
+        var data = new func("zhangsan")
+        data.inc()
+       
+        data.sun()
+		
+	</script>
+</html>
