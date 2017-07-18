@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		
+	</head>
+	<body>
+		<div id="app">
+			<div class="form-group">
+			    <label for="name">姓名：</label>
+			    <input type="text" v-model="newuser.name" class="form-control" id="name" placeholder="姓名">
+			</div>
+			<div class="form-group">
+			    <label for="age">年龄</label>
+			    <input type="number" v-model="newuser.age" class="form-control" id="age" placeholder="年龄">
+			</div>
+			<div class="form-group">
+				<select class="form-control" v-model="newuser.sex">
+				    <option value="1" selected="selected">男</option>
+				    <option value="0">女</option>
+				</select>
+			</div>
+			<button @click="createdata">添加</button>
+			<span>{{message}}</span>
+			<table class="table table-striped">
+				<tr>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>性别</th>
+					<th>操作</th>
+				</tr>
+				<tr v-for="(item,index) in users">
+					<td>{{index}}:{{item.name}}</td>
+					<td>{{item.age}}</td>
+					<td v-if="item.sex == 1">男</td>
+					<td v-else="item.sex == 0">女</td>
+					<td><button class="btn" @click="del(index)">删除</button></td>
+				</tr>
+            </table>
+		</div>
+	</body>
+	<script src="https://cdn.bootcss.com/vue/2.4.1/vue.min.js"></script>
+	<script type="text/javascript">
+		//初始化用户输入的信息
+		var app = new Vue({
+			el:"#app",
+			data:{
+				message:"点击状态",
+                newuser:{name:'',age:'',sex:1},				
+				users:[
+				    {name:"xiaoming",age:12,sex:1},
+				    {name:"xiaohua",age:12,sex:0}
+				]
+			},
+			methods:{
+				createdata:function(){
+					//this.users.push(this.newuser)
+					this.users.unshift(this.newuser)
+					this.newuser = {name:'',age:'',sex:1}
+				},
+				del:function(index){
+					this.message = "你点击了"+index
+					this.users.splice(index,1)
+				}
+			}
+		})
+	</script>
+</html>
