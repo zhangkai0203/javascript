@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>移动端摇一摇传感器</title>
+</head>
+<body onload="init()">
+    <p>用力摇一摇你手机</p>
+    <div id="text"></div>
+    <button id="btn">点击摇一摇</button>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    	
+        var SHAKE_THRESHOLD = 1200;
+        var last_update = 0;
+        var shake_num = 0;
+        var x = y = z = last_x = last_y = last_z = 0;
+        function init() {
+            
+        }
+        function deviceMotionHandler(eventData) {
+            var acceleration = eventData.accelerationIncludingGravity;
+            var curTime = new Date().getTime();
+            if ((curTime - last_update) > 100) {
+                var diffTime = curTime - last_update;
+                last_update = curTime;
+                x = acceleration.x;
+                y = acceleration.y;
+                z = acceleration.z;
+                var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+
+                if (speed > SHAKE_THRESHOLD) {
+                    shake_num++;
+                    
+                    document.getElementById('text').innerHTML="摇动了"+shake_num+'下';
+                }
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+        
+        
+        var btn = document.getElementById("btn");
+        var text = document.getElementById("text");
+        var star = 0;
+        var end = 3;
+        //点击后的方法
+        btn.onclick = function(){
+        	if (window.DeviceMotionEvent) {
+                window.addEventListener('devicemotion', deviceMotionHandler, false);
+            } else {
+                alert('not support mobile event');
+            }
+        	time_data();
+        	
+        }
+        function time_data(){
+        	var times = setInterval(function(){
+        		if(star == end){
+	        		clearInterval(times);
+	        		return;
+	        	}
+        		//如果手机没有摇晃就不发送数据
+        		if(shake_num == 0){
+        			text.innerHTML = "没摇晃手机"
+        			return;
+        		}else{
+        			text.innerHTML = "摇晃手机"
+        			/*$.ajax({
+		        		type:"get",
+		        		url:"",
+		        		async:true,
+		        		data:{num:shake_num},
+		        		success:function(data){
+		        			
+		        		},
+		        		error:function(msg){
+		        			alert("请求错误")
+		        		}
+		        	});*/
+        		}
+	        	date++;
+	        },1000)
+        	
+        	
+	    }
+        
+        
+    </script>
+</html>
