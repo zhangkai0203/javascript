@@ -1,0 +1,90 @@
+<!DOCTYPE >
+<html>
+	<head>
+		<title>js随机数</title>
+		<meta charset="UTF-8">
+		<style>
+			.box{
+				margin: 20px;
+				text-align: center;
+			}
+			#display{
+				font-family: "微软雅黑";
+				font-size: 40px;
+				color: red;	
+				margin-bottom: 10px;
+			}
+			#btn{
+			    width: 200px;
+				border: 0px;
+				padding: 10px;
+				border-radius: 5px;
+				font-size: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<fieldset>
+			
+			<legend>随机数生成</legend>
+			
+			<div class="box">
+				<div id="display">0000000</div>
+				<button id="btn">生成随机数</button>
+			</div>
+			
+	    </fieldset>		
+		
+	</body>
+	<script>
+		var btn = document.getElementById('btn');
+		var dis = document.getElementById('display');
+		
+		var num = 100;
+		
+		var shuzi;
+		
+		//点击事件
+		btn.onclick = function(){
+			
+			shuzi = setInterval(fun,10);
+			
+			setTimeout(cler_fun,1000)
+			
+		}
+		//生成随机的数字
+		function fun(){
+			
+			rand = Math.floor(Math.random() * num);
+			
+			dis.innerHTML = rand;
+			
+			btn.disabled = true
+			
+		}
+		//清除定时器
+		function cler_fun(){
+			
+			clearInterval(shuzi);
+			
+			btn.disabled = false
+			
+		}
+		
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
